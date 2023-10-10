@@ -2001,3 +2001,52 @@ const movies = [
     score: 8
   }
 ];
+
+function getAllDirectors(moviesArray) {
+  const allDirectors = moviesArray.map(peli => {
+      return peli.director;
+  });
+  return allDirectors;
+}
+//console.log(getAllDirectors(movies))
+
+//BONUS 
+
+  function getAllDirectors(moviesArray) {
+    const allDirectors = moviesArray.map(peli => {
+        return peli.director;
+    });
+    const allDirectorsFiltered = allDirectors.filter((item, index) => {
+      return allDirectors.indexOf(item) === index
+    })
+    return allDirectorsFiltered;
+  }
+ //console.log(getAllDirectors(movies))
+
+function howManyMovies(moviesArray) {
+  const spielbergPeliDrama = moviesArray.filter(peli => {
+      return peli.director === 'Steven Spielberg' && peli.genre.includes('Drama');
+  });
+  return spielbergPeliDrama
+}
+//console.log(howManyMovies(movies))
+
+function scoresAverage(moviesArray) {
+  const totalScore = moviesArray.reduce((acc, currentValue) => {
+      return acc + currentValue.score       
+},0)
+  const scoreAvg = (totalScore/moviesArray.length).toFixed(2)
+  return scoreAvg
+}
+//console.log(scoresAverage(movies))
+
+function dramaMoviesScore(moviesArray) {
+    const dramaMovies = moviesArray.filter(peli => {
+      return peli.genre.includes('Drama')
+    })
+    const dramaScoreAvg = scoresAverage(dramaMovies)
+    return dramaScoreAvg
+}
+//console.log(dramaMoviesScore(movies))
+
+//Math.round(100 - (totalScore / moviesArray.length) * 100)
