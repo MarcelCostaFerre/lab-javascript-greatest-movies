@@ -2002,6 +2002,7 @@ const movies = [
   }
 ];
 
+
 function getAllDirectors(moviesArray) {
   const allDirectors = moviesArray.map(peli => {
       return peli.director;
@@ -2023,20 +2024,29 @@ function getAllDirectors(moviesArray) {
   }
  //console.log(getAllDirectors(movies))
 
-function howManyMovies(moviesArray) {
+ function howManyMovies(moviesArray) {
+  if(moviesArray.length===0){
+      return 0
+  }
   const spielbergPeliDrama = moviesArray.filter(peli => {
       return peli.director === 'Steven Spielberg' && peli.genre.includes('Drama');
-  });
-  return spielbergPeliDrama
+  })
+  return spielbergPeliDrama.length;
 }
 //console.log(howManyMovies(movies))
 
 function scoresAverage(moviesArray) {
-  const totalScore = moviesArray.reduce((acc, currentValue) => {
-      return acc + currentValue.score       
-},0)
-  const scoreAvg = (totalScore/moviesArray.length).toFixed(2)
-  return scoreAvg
+    if(moviesArray.length===0){
+        return 0
+    }
+    const totalScore = moviesArray.reduce((acc, currentValue) => {
+        if(typeof currentValue.score==='number'){
+        return acc + currentValue.score;
+        } else {return acc}
+              
+    },0)
+    const scoreAvg = (totalScore/moviesArray.length).toFixed(2);
+    return Number(scoreAvg);
 }
 //console.log(scoresAverage(movies))
 
@@ -2050,3 +2060,50 @@ function dramaMoviesScore(moviesArray) {
 //console.log(dramaMoviesScore(movies))
 
 //Math.round(100 - (totalScore / moviesArray.length) * 100)
+
+function orderByYear(moviesArray) {
+  const copyMoviesArray = [...moviesArray]
+  const moviesByTitle = copyMoviesArray.sort((a, b) => {
+    if(a.title < b.title)return -1
+    if(a.title > b.title)return 1
+    if(a.title === b.title)return 0
+  })  
+  const moviesByYears = copyMoviesArray.sort((a, b) =>{
+    if(a.year < b.year)return -1
+    if(a.year > b.year)return 1
+    if(a.year === b.year)return moviesByTitle
+  })
+  return moviesByYears
+}
+//console.log(orderByYear(movies))
+
+function orderAlphabetically(moviesArray) {
+  let copyMoviesArray = [...moviesArray]
+  let moviesByTitle = copyMoviesArray.sort((a, b) => {
+    if(a.title < b.title)return -1
+    if(a.title > b.title)return 1
+    if(a.title === b.title)return 0
+  }) 
+  let moviesArray20 = moviesByTitle.splice(0, 20)
+  let moviesArray20Title = moviesArray20.map(peli => {
+    return peli.title
+  })
+  return moviesArray20Title
+}
+//console.log(orderAlphabetically(movies))
+
+// BONUS - Iteration 7: Time Format - Turn duration of the movies from hours to minutes
+function turnHoursToMinutes(moviesArray) {
+  let copyMoviesArray = [...moviesArray]
+  let moviesMinutes = copyMoviesArray.map(peli => {
+    let parts = peli.duration.split(' ')
+    let hoursToMinutes = (parts[0].replace('h', ''))*60
+    let minutes = (parts[1].replace('min', ''))*1 
+    let result = hoursToMinutes+minutes
+    return result
+  })
+  console.log (moviesMinutes)
+}
+turnHoursToMinutes(movies)
+
+//console.log(turnHoursToMinutes(movies))
